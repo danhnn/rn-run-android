@@ -16,5 +16,11 @@
     "\"rn-run-android\""
   ],
   "author": "HarryNguyen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "inquirer": "^6.3.1",
+    "shelljs": "^0.8.3"
+  }
 }

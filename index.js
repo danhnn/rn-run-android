@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+
+/**
+ * Utility for running react native in android with various options
+ * @Author Harry Nguyen
+ * Github: https://github.com/harry-nguyen-88
+ */
+
 const { spawn, execSync } = require("child_process")
 const path = require("path")
 const net = require("net")
