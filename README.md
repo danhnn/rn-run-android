@@ -1,6 +1,6 @@
 # rn-run-android
 
-No more pain when running react-native app in android emulator. Very similar to `react-native run-ios`: just one command for everything with more advance options
+No more pain when running react-native app in android emulator. Very similar to `react-native run-ios`: just `rn-run-android` for everything with more advance options.
 
 ## Demo
 
