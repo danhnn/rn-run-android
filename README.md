@@ -29,7 +29,7 @@ $ rn-run-android
 rn-run-android -d -n
 ```
 
-Inspired by [react-native-run-android](https://github.com/nickpisacane/react-native-run-android)
+Inspired by [react-native-run-android](https://github.com/nickpisacane/react-native-run-android) ( with fixed for emulator synchornization issue and more advance options )
 
 MIT License
 Copyright (c) 2019 Harry Nguyễn
