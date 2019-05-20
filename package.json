@@ -1,6 +1,6 @@
 {
   "name": "rn-run-android",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,16 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "later"
+    "url": "https://github.com/harry-nguyen-88/rn-run-android"
+  },
+  "bin": {
+    "rn-run-android": "index.js"
   },
   "keywords": [
-    "\"react-native\"",
-    "\"run-android\"",
-    "\"rn-run-android\""
+    "react-native",
+    "run-android",
+    "rn-run-android"
   ],
-  "author": "HarryNguyen",
+  "author": "HarryNguyen <dnncntt@gmail.com>",
+  "homepage": "https://github.com/harry-nguyen-88/rn-run-android",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "inquirer": "^6.3.1",

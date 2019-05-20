@@ -1,14 +1,6 @@
 #!/usr/bin/env node
-
-/**
- * Utility for running react native in android with various options
- * @Author Harry Nguyen
- * Github: https://github.com/harry-nguyen-88
- */
-
 const { spawn, execSync } = require("child_process")
 const path = require("path")
-const net = require("net")
 const shell = require("shelljs")
 const inquirer = require("inquirer")
 const chalk = require("chalk")
@@ -21,7 +13,7 @@ program
 
 program.parse(process.argv)
 
-const APP_NAME = "react-native-run-android"
+const APP_NAME = "rn-run-android"
 const RN_URI =
   "https://facebook.github.io/react-native/docs/getting-started.html"
 const REQUIRED_BINS = ["react-native", "emulator", "adb"]
@@ -115,40 +107,6 @@ const emulateDevice = device => {
     })
 }
 
-const isPortTaken = port =>
-  new Promise((resolve, reject) => {
-    const tester = net
-      .createServer()
-      .once("error", err =>
-        err.code == "EADDRINUSE" ? resolve(false) : reject(err)
-      )
-      .once("listening", () =>
-        tester.once("close", () => resolve(true)).close()
-      )
-      .listen(port)
-  })
-
-const startReactNativePackager = () => {
-  console.log(chalk.blue(`Starting react-native package server ...`))
-  try {
-    const portInUsed = isPortTaken(8081)
-    if (portInUsed) {
-      console.log(
-        chalk.red(
-          `Port 8081 in used! Seems like package manager is already running!`
-        )
-      )
-      return Promise.resolve()
-    }
-  } catch {
-    return Promise.resolve()
-  }
-  spawn("react-native", ["start"], {
-    stdio: ["pipe", process.stdout, process.stderr]
-  })
-  return Promise.resolve()
-}
-
 const startReactNative = () => {
   console.log(chalk.blue(`Starting react-native ...`))
   const child = spawn("react-native", ["run-android"], {
@@ -162,8 +120,10 @@ const startReactNative = () => {
 const main = () => {
   REQUIRED_BINS.forEach(requireBin)
   if (adbDeviceIsRunning()) {
-    console.log(chalk.green(`Device is already running! By pass all options.`))
-    Promise.all([startReactNativePackager()]).then(() => startReactNative())
+    console.log(
+      chalk.green(`* Device is already running! By pass all options.`)
+    )
+    startReactNative()
     return
   }
 
@@ -175,23 +135,20 @@ const main = () => {
   }
 
   if (program.writable) {
-    console.log(chalk.green(`Wiretable mode is seleted`))
+    console.log(chalk.green(`* Wiretable mode is seleted`))
   }
 
   if (program.nosnapshot) {
-    console.log(chalk.green(`NoSnapshot mode is seleted`))
+    console.log(chalk.green(`* NoSnapshot mode is seleted`))
   }
 
   if (program.default) {
     console.log(
       chalk.green(
-        `Default option is seleted. First created emulator will be choosen.`
+        `* Default option is seleted. First created emulator will be choosen.`
       )
     )
-    return Promise.all([
-      emulateDevice(devices[0]),
-      startReactNativePackager()
-    ]).then(() => startReactNative())
+    return emulateDevice(devices[0]).then(() => startReactNative())
   }
 
   inquirer
@@ -205,11 +162,7 @@ const main = () => {
     ])
     .then(answer => {
       const { device } = answer
-
-      return Promise.all([
-        emulateDevice(device),
-        startReactNativePackager()
-      ]).then(() => startReactNative())
+      return emulateDevice(device).then(() => startReactNative())
     })
     .catch(error => {
       console.error(chalk.red`Something failed:\n`, error)
